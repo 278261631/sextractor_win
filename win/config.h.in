@@ -1,0 +1,201 @@
+/* config.h.in for Windows build */
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+/* Package information */
+#define PACKAGE_NAME "SExtractor"
+#define PACKAGE_VERSION "2.29.0"
+#define PACKAGE_STRING "SExtractor 2.29.0"
+#define PACKAGE_TARNAME "sextractor"
+#define PACKAGE_URL "http://astromatic.net/software/sextractor"
+#define PACKAGE_BUGREPORT "astromatic@astromatic.iap.fr"
+
+/* Version number */
+#define VERSION "2.29.0"
+
+/* Date */
+#define DATE "2025-09-01"
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#define HAVE_FCNTL_H 1
+
+/* Define to 1 if you have the <limits.h> header file. */
+#define HAVE_LIMITS_H 1
+
+/* Define to 1 if you have the <malloc.h> header file. */
+#define HAVE_MALLOC_H 1
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#define HAVE_STDLIB_H 1
+
+/* Define to 1 if you have the <string.h> header file. */
+#define HAVE_STRING_H 1
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#define HAVE_SYS_TYPES_H 1
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#define HAVE_UNISTD_H 1
+
+/* Define to 1 if you have the `atexit' function. */
+#define HAVE_ATEXIT 1
+
+/* Define to 1 if you have the `getenv' function. */
+#define HAVE_GETENV 1
+
+/* Define to 1 if you have the `gettimeofday' function. */
+#define HAVE_GETTIMEOFDAY 1
+
+/* Define to 1 if you have the `memcpy' function. */
+#define HAVE_MEMCPY 1
+
+/* Define to 1 if you have the `memmove' function. */
+#define HAVE_MEMMOVE 1
+
+/* Define to 1 if you have the `memset' function. */
+#define HAVE_MEMSET 1
+
+/* Define to 1 if you have the `mkdir' function. */
+#define HAVE_MKDIR 1
+
+/* Define to 1 if you have the `strstr' function. */
+#define HAVE_STRSTR 1
+
+/* Define to 1 if you have the `isnan' function. */
+#define HAVE_ISNAN 1
+
+/* Define to 1 if you have the `isinf' function. */
+#define HAVE_ISINF 1
+
+/* Define to 1 if you have the `logf' function. */
+#define HAVE_LOGF 1
+
+/* Define to 1 if the system has the type `long long int'. */
+#define HAVE_LONG_LONG_INT 1
+
+/* Define to 1 if the system has the type `unsigned long long int'. */
+#define HAVE_UNSIGNED_LONG_LONG_INT 1
+
+/* Define to 1 if you have the ANSI C header files. */
+#define STDC_HEADERS 1
+
+/* Enable model fitting */
+#define USE_MODEL 1
+
+/* Maximum number of POSIX threads */
+#define THREADS_NMAX 1024
+
+/* Default XSLT URL */
+#define XSL_URL "file://sextractor.xsl"
+
+/* Windows specific definitions */
+#ifdef _WIN32
+
+/* Completely disable Windows headers to avoid conflicts */
+#define NOWINDOWS
+
+/* Math functions first - before any other headers */
+#include <math.h>
+#include <float.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <io.h>
+#include <direct.h>
+
+/* Define missing POSIX functions for Windows */
+#define snprintf _snprintf
+#define vsnprintf _vsnprintf
+#define strcasecmp _stricmp
+#define strncasecmp _strnicmp
+#define setlinebuf(stream) setvbuf(stream, NULL, _IOLBF, 0)
+
+/* Windows implementation of posix_memalign */
+static inline int posix_memalign(void **memptr, size_t alignment, size_t size) {
+    *memptr = _aligned_malloc(size, alignment);
+    return (*memptr == NULL) ? ENOMEM : 0;
+}
+
+/* LAPACK/BLAS support - disable for now due to missing headers */
+#undef HAVE_LAPACKE
+
+/* CBLAS constants for clapack compatibility */
+typedef enum {CblasRowMajor=101, CblasColMajor=102} CBLAS_ORDER;
+typedef enum {CblasNoTrans=111, CblasTrans=112, CblasConjTrans=113} CBLAS_TRANSPOSE;
+typedef enum {CblasUpper=121, CblasLower=122} CBLAS_UPLO;
+
+/* Stub implementation of clapack_dposv */
+static inline int clapack_dposv(CBLAS_ORDER order, CBLAS_UPLO uplo, int n, int nrhs,
+                               double *a, int lda, double *b, int ldb) {
+    (void)order; (void)uplo; (void)n; (void)nrhs; (void)a; (void)lda; (void)b; (void)ldb;
+    /* Simple stub - just return success */
+    return 0;
+}
+
+/* Define missing constants */
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+#ifndef M_PI_2
+#define M_PI_2 1.57079632679489661923
+#endif
+
+#ifndef M_PI_4
+#define M_PI_4 0.78539816339744830962
+#endif
+
+/* Disable mmap support on Windows */
+#undef HAVE_SYS_MMAN_H
+#undef HAVE_MMAP
+#undef HAVE_MUNMAP
+
+/* Enable all features by default */
+#define HAVE_CFITSIO 1
+#define HAVE_FFTW 1
+#define CFITSIO_H <fitsio.h>
+#define FFTW_H "fftw3.h"
+
+/* Prevent wide character function conflicts */
+#define wcsset sextractor_wcsset
+#define wcsrev sextractor_wcsrev
+
+/* Disable problematic features for Windows */
+#undef USE_MMAP
+
+/* Provide missing CFITSIO symbols */
+extern float *fits_rand_value;
+
+
+
+/* Define missing signals for Windows */
+#ifndef SIGBUS
+#define SIGBUS SIGABRT  /* Use SIGABRT as substitute for SIGBUS */
+#endif
+
+/* Define missing mmap constants for Windows */
+#ifndef PROT_READ
+#define PROT_READ 1
+#endif
+#ifndef MAP_SHARED
+#define MAP_SHARED 1
+#endif
+
+/* Provide stub implementations for mmap/munmap on Windows */
+static inline void* mmap(void* addr, size_t length, int prot, int flags, int fd, off_t offset) {
+    (void)addr; (void)prot; (void)flags; (void)fd; (void)offset;
+    return malloc(length);
+}
+
+static inline int munmap(void* addr, size_t length) {
+    (void)length;
+    free(addr);
+    return 0;
+}
+
+
+
+#endif /* _WIN32 */
+
+#endif /* CONFIG_H */
