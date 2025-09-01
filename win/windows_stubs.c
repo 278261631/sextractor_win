@@ -7,6 +7,8 @@
 #endif
 
 #include <math.h>
+#include <stdlib.h>
+#include <errno.h>
 
 /* CFITSIO missing symbols */
 static float fits_rand_dummy = 0.0f;
@@ -22,3 +24,5 @@ void sincosf(float x, float *sin_x, float *cos_x) {
     *sin_x = sinf(x);
     *cos_x = cosf(x);
 }
+
+

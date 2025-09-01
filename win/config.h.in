@@ -111,9 +111,13 @@
 #define strncasecmp _strnicmp
 #define setlinebuf(stream) setvbuf(stream, NULL, _IOLBF, 0)
 
-/* Windows implementation of posix_memalign */
+/* Windows implementation of posix_memalign
+ * Use regular malloc for compatibility with free()
+ * The alignment requirement is not critical for correctness
+ */
 static inline int posix_memalign(void **memptr, size_t alignment, size_t size) {
-    *memptr = _aligned_malloc(size, alignment);
+    (void)alignment; /* Suppress unused parameter warning */
+    *memptr = malloc(size);
     return (*memptr == NULL) ? ENOMEM : 0;
 }
 
