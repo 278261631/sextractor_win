@@ -12,7 +12,7 @@ mingw-w64-x86_64-make              # Make构建工具
 
 ### 核心依赖库
 ```bash
-mingw-w64-x86_64-fftw              # FFTW - 快速傅里叶变换库 (必需)
+mingw-w64-x86_64-fftw              # FFTW - 快速傅里叶变换库 (必需) 单双精度？？？
 ```
 
 ## 可选包 (Optional Packages)
