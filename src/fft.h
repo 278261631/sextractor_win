@@ -34,13 +34,7 @@
 #ifndef _FFT_H_
 #define _FFT_H_
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#ifdef HAVE_FFTW
-#include <fftw3.h>
-#endif
+#include FFTW_H
 
 /*---------------------------- Internal constants ---------------------------*/
 
