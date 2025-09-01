@@ -30,7 +30,7 @@ echo Step 3: Running CMake configuration...
 echo Using Windows native CMake with MinGW Makefiles generator
 echo Build type: Debug (forced in CMakeLists.txt for stability)
 cd build
-C:\CMake\bin\cmake.exe -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=../install ..
+C:\CMake\bin\cmake.exe -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=../install ../win
 if %ERRORLEVEL% neq 0 (
     echo ERROR: CMake configuration failed!
     pause
@@ -109,7 +109,7 @@ if exist "sex.exe" (
     echo - Generator: MinGW Makefiles
     echo - CMake: Windows native version
     echo.
-    echo The executable is ready to use: win\build\sex.exe
+    echo The executable is ready to use: build\sex.exe
     echo.
     echo All required DLL files are present:
     dir /b *.dll
@@ -121,4 +121,3 @@ if exist "sex.exe" (
 echo ========================================
 echo Build completed successfully!
 echo ========================================
-pause

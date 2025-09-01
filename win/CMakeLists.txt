@@ -34,12 +34,12 @@ find_library(MATH_LIBRARY m)
 # Find FFTW library (prefer single precision)
 find_library(FFTW_LIBRARY
     NAMES fftw3f libfftw3f fftw3 libfftw3
-    PATHS /mingw64/lib
+    PATHS C:/msys64/mingw64/lib /mingw64/lib
     REQUIRED
 )
 find_path(FFTW_INCLUDE_DIR
     NAMES fftw3.h
-    PATHS /mingw64/include
+    PATHS C:/msys64/mingw64/include /mingw64/include
     REQUIRED
 )
 message(STATUS "Using FFTW: ${FFTW_LIBRARY}")
@@ -48,12 +48,12 @@ include_directories(${FFTW_INCLUDE_DIR})
 # Find CFITSIO library
 find_library(CFITSIO_LIBRARY
     NAMES cfitsio libcfitsio
-    PATHS /mingw64/lib
+    PATHS C:/msys64/mingw64/lib /mingw64/lib
     REQUIRED
 )
 find_path(CFITSIO_INCLUDE_DIR
     NAMES fitsio.h
-    PATHS /mingw64/include
+    PATHS C:/msys64/mingw64/include /mingw64/include
     REQUIRED
 )
 message(STATUS "Using CFITSIO: ${CFITSIO_LIBRARY}")
@@ -62,11 +62,11 @@ include_directories(${CFITSIO_INCLUDE_DIR})
 # Find LAPACK/BLAS libraries
 find_library(LAPACK_LIBRARY
     NAMES lapack liblapack
-    PATHS /mingw64/lib
+    PATHS C:/msys64/mingw64/lib /mingw64/lib
 )
 find_library(BLAS_LIBRARY
     NAMES openblas libopenblas blas libblas
-    PATHS /mingw64/lib
+    PATHS C:/msys64/mingw64/lib /mingw64/lib
 )
 
 if(LAPACK_LIBRARY AND BLAS_LIBRARY)

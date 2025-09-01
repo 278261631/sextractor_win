@@ -12,7 +12,7 @@ mingw-w64-x86_64-make              # Make构建工具
 
 ### 核心依赖库
 ```bash
-mingw-w64-x86_64-fftw              # FFTW - 快速傅里叶变换库 (必需) 单双精度？？？
+mingw-w64-x86_64-fftw              # FFTW - 快速傅里叶变换库 (必需，包含单双精度版本)
 ```
 
 ## 可选包 (Optional Packages)
@@ -72,7 +72,7 @@ pacman -S --noconfirm \
 | toolchain | 编译器 | 必需 | GCC, G++, binutils等编译工具 |
 | cmake | 构建系统 | 必需 | 项目使用CMake构建 |
 | make | 构建工具 | 必需 | 执行编译过程 |
-| fftw | FFT计算 | 必需 | SExtractor核心算法依赖 |
+| fftw | FFT计算 | 必需 | SExtractor核心算法依赖，包含单双精度版本 |
 | cfitsio | FITS支持 | 可选 | 完整的FITS文件格式支持 |
 | openblas | 线性代数 | 可选 | 优化的数学运算性能 |
 | lapack | 线性代数 | 可选 | 高级线性代数算法 |
