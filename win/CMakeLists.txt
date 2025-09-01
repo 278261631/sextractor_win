@@ -5,14 +5,15 @@ project(SExtractor VERSION 2.29.0 LANGUAGES C)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-# Set default build type
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
+# Force Debug build type for stability (no aggressive optimizations)
+# This ensures consistent behavior similar to CLion Debug builds
+set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 
 # Compiler flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-array-parameter -Wno-unknown-pragmas")
+# Debug flags: -g (debug symbols), -O0 (no optimization for stability)
 set(CMAKE_C_FLAGS_DEBUG "-g -O0")
+# Release flags: -O3 (aggressive optimization), -DNDEBUG (disable assertions)
 set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 # Define configuration
